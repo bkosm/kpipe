@@ -2,10 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths: [ '.github/workflows/**', 'gradle/**', 'src/**', '*.gradle.kts', '*.properties' ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
     paths: [ '.github/workflows/**', 'gradle/**', 'src/**', '*.gradle.kts', '*.properties' ]
 
 jobs:
