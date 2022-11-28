@@ -3,16 +3,24 @@ package com.bkosm.kpipe.examples
 import com.bkosm.kpipe.pipe
 import org.junit.jupiter.api.Test
 import kotlin.test.assertIs
-import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.expect
 
 class PipeExample {
+    interface ValueFactory<PRIMITIVE : Any, TARGET : Any> {
+        fun of(value: PRIMITIVE): TARGET
+    }
+
     @JvmInline
-    value class EID(private val value: String) {
-        init {
-            require(value.isNotEmpty() && value.isNotBlank())
+    value class EID private constructor(private val value: String) {
+        companion object : ValueFactory<String, EID> {
+            override fun of(value: String) = pipe(
+                value,
+                { it.isNotEmpty() && it.isNotBlank() },
+                ::require,
+                { EID(value) }
+            )
         }
     }
 
@@ -47,7 +55,7 @@ class PipeExample {
     @Test
     fun `you can't create a blank EID`() {
         pipe(
-            runCatching { EID("") }.exceptionOrNull(),
+            runCatching { EID.of("") }.exceptionOrNull(),
             { assertIs<IllegalArgumentException>(it) }
         )
     }
@@ -56,7 +64,7 @@ class PipeExample {
     fun `can store and retrieve events`() {
         // given
         val uut = EventStore.InMemory
-        val id = EID("1")
+        val id = EID.of("1")
         val event = Event.Initialized(id, "2077-03-03T10:15:30Z")
 
         // when/then

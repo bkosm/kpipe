@@ -1,6 +1,5 @@
 package com.bkosm.kpipe
 
-
 class Pipe {
     @Suppress("UNUSED_PARAMETER")
     companion object {
