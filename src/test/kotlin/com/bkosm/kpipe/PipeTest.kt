@@ -113,7 +113,7 @@ internal class PipeTest {
 
     @Test
     fun `of 9`() {
-        val res = Pipe(
+        val res = pipe(
             2,
             { it * 3 },
             Int::toString,
@@ -131,7 +131,7 @@ internal class PipeTest {
 
     @Test
     fun `of 10`() {
-        val res = Pipe(
+        val res = p(
             2,
             { it * 3 },
             Int::toString,
