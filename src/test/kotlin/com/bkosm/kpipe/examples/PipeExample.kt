@@ -2,6 +2,7 @@ package com.bkosm.kpipe.examples
 
 import com.bkosm.kpipe.pipe
 import org.junit.jupiter.api.Test
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 import kotlin.test.expect
 
@@ -43,6 +44,14 @@ class PipeExample {
     }
 
     @Test
+    fun `you can't create a blank EID`() {
+        pipe(
+            runCatching { EID("") }.exceptionOrNull(),
+            { assertIs<IllegalArgumentException>(it) }
+        )
+    }
+
+    @Test
     fun `can store and retrieve events`() {
         // given
         val uut = EventStore.InMemory
@@ -65,7 +74,7 @@ class PipeExample {
         pipe(
             id,
             uut::get,
-            { assertTrue { it.isSuccess }; it.getOrThrow() },
+            { it.getOrNull() },
             { expect(event) { it } }
         )
     }
