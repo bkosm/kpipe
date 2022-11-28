@@ -147,4 +147,24 @@ internal class PipeTest {
 
         expect(3366.0) { res }
     }
+
+    @Test
+    fun `of 11`() {
+        val res = p(
+            2,
+            { it * 3 },
+            Int::toString,
+            String::toDouble,
+            { it.pow(2) },
+            Double::toString,
+            { it.split("") },
+            { it.filter { c -> c.isNotBlank() } },
+            { it.map { c -> if (c.get(0) in '0'..'9') "$c$c" else c } },
+            { it.joinToString("") },
+            String::toDouble,
+            { it / 2 },
+        )
+
+        expect(1683.0) { res }
+    }
 }
