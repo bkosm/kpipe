@@ -56,7 +56,7 @@ class PipeExample {
     fun `you can't create a blank EID`() {
         pipe(
             runCatching { EID.of("") }.exceptionOrNull(),
-            { assertIs<IllegalArgumentException>(it) }
+            { assertIs<IllegalArgumentException>(it) } // kotlin does not allow method reference with generics
         )
     }
 
@@ -77,7 +77,8 @@ class PipeExample {
         pipe(
             event,
             uut::store,
-            { assertTrue { it.isSuccess } },
+            { it.isSuccess },
+            ::assertTrue,
         )
 
         pipe(
