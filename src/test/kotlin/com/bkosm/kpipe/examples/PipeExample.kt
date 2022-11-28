@@ -3,6 +3,8 @@ package com.bkosm.kpipe.examples
 import com.bkosm.kpipe.pipe
 import org.junit.jupiter.api.Test
 import kotlin.test.assertIs
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.test.expect
 
@@ -21,7 +23,7 @@ class PipeExample {
     }
 
     interface EventStore {
-        fun get(id: EID): Result<Event>
+        fun get(id: EID): Event?
         fun store(event: Event): Result<Unit>
 
         companion object {
@@ -29,8 +31,7 @@ class PipeExample {
                 private val storage = mutableMapOf<EID, Event>()
                 override fun get(id: EID) = pipe(
                     id,
-                    storage::get,
-                    { runCatching { it!! } }
+                    storage::get
                 )
 
                 override fun store(event: Event) = pipe(
@@ -62,7 +63,7 @@ class PipeExample {
         pipe(
             id,
             uut::get,
-            { assertTrue { it.isFailure } },
+            ::assertNull,
         )
 
         pipe(
@@ -74,7 +75,6 @@ class PipeExample {
         pipe(
             id,
             uut::get,
-            { it.getOrNull() },
             { expect(event) { it } }
         )
     }
