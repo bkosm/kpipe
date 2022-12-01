@@ -1,5 +1,11 @@
 package com.bkosm.kpipe
 
+/**
+ * A pipe function that takes a starting value and a variable number of functions.
+ * Each subsequent function is provided the result of last invocation as `it`.
+ * Returns the result of the last function invocation.
+ * Supports up to 11 intermediate transformations.
+ */
 class Pipe {
     companion object {
         inline operator fun <START, S1> invoke(
