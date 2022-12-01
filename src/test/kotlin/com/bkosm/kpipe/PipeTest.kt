@@ -1,3 +1,5 @@
+@file:Suppress("MoveLambdaOutsideParentheses")
+
 package com.bkosm.kpipe
 
 import org.junit.jupiter.api.Test

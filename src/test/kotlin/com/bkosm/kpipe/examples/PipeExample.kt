@@ -1,3 +1,5 @@
+@file:Suppress("MoveLambdaOutsideParentheses")
+
 package com.bkosm.kpipe.examples
 
 import com.bkosm.kpipe.pipe
@@ -8,7 +10,7 @@ import kotlin.test.assertTrue
 import kotlin.test.expect
 
 class PipeExample {
-    interface ValueFactory<PRIMITIVE : Any, TARGET : Any> {
+    fun interface ValueFactory<PRIMITIVE : Any, TARGET : Any> {
         fun of(value: PRIMITIVE): TARGET
     }
 
@@ -33,23 +35,20 @@ class PipeExample {
     interface EventStore {
         fun get(id: EID): Event?
         fun store(event: Event): Result<Unit>
+    }
 
-        companion object {
-            val InMemory = object : EventStore {
-                private val storage = mutableMapOf<EID, Event>()
-                override fun get(id: EID) = pipe(
-                    id,
-                    storage::get
-                )
+    fun InMemoryEventStore() = object : EventStore {
+        private val storage = mutableMapOf<EID, Event>()
+        override fun get(id: EID) = pipe(
+            id,
+            storage::get
+        )
 
-                override fun store(event: Event) = pipe(
-                    event,
-                    { storage[it.id] = it },
-                    Result.Companion::success
-                )
-
-            }
-        }
+        override fun store(event: Event) = pipe(
+            event,
+            { storage[it.id] = it },
+            Result.Companion::success
+        )
     }
 
     @Test
@@ -63,7 +62,7 @@ class PipeExample {
     @Test
     fun `can store and retrieve events`() {
         // given
-        val uut = EventStore.InMemory
+        val uut = InMemoryEventStore()
         val id = EID.of("1")
         val event = Event.Initialized(id, "2077-03-03T10:15:30Z")
 
