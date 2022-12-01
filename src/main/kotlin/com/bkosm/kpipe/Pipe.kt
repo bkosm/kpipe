@@ -17,14 +17,14 @@ class Pipe {
             initial: START,
             step1: (START) -> S1,
             step2: (S1) -> S2,
-        ) = step2(step1(initial))
+        ) = step2(invoke(initial, step1))
 
         inline operator fun <START, S1, S2, S3> invoke(
             initial: START,
             step1: (START) -> S1,
             step2: (S1) -> S2,
             step3: (S2) -> S3,
-        ) = step3(step2(step1(initial)))
+        ) = step3(invoke(initial, step1, step2))
 
         inline operator fun <START, S1, S2, S3, S4> invoke(
             initial: START,
@@ -32,7 +32,7 @@ class Pipe {
             step2: (S1) -> S2,
             step3: (S2) -> S3,
             step4: (S3) -> S4,
-        ) = step4(step3(step2(step1(initial))))
+        ) = step4(invoke(initial, step1, step2, step3))
 
         inline operator fun <START, S1, S2, S3, S4, S5> invoke(
             initial: START,
@@ -41,7 +41,7 @@ class Pipe {
             step3: (S2) -> S3,
             step4: (S3) -> S4,
             step5: (S4) -> S5,
-        ) = step5(step4(step3(step2(step1(initial)))))
+        ) = step5(invoke(initial, step1, step2, step3, step4))
 
         inline operator fun <START, S1, S2, S3, S4, S5, S6> invoke(
             initial: START,
@@ -51,7 +51,7 @@ class Pipe {
             step4: (S3) -> S4,
             step5: (S4) -> S5,
             step6: (S5) -> S6,
-        ) = step6(step5(step4(step3(step2(step1(initial))))))
+        ) = step6(invoke(initial, step1, step2, step3, step4, step5))
 
         inline operator fun <START, S1, S2, S3, S4, S5, S6, S7> invoke(
             initial: START,
@@ -62,7 +62,7 @@ class Pipe {
             step5: (S4) -> S5,
             step6: (S5) -> S6,
             step7: (S6) -> S7,
-        ) = step7(step6(step5(step4(step3(step2(step1(initial)))))))
+        ) = step7(invoke(initial, step1, step2, step3, step4, step5, step6))
 
         inline operator fun <START, S1, S2, S3, S4, S5, S6, S7, S8> invoke(
             initial: START,
@@ -74,7 +74,7 @@ class Pipe {
             step6: (S5) -> S6,
             step7: (S6) -> S7,
             step8: (S7) -> S8,
-        ) = step8(step7(step6(step5(step4(step3(step2(step1(initial))))))))
+        ) = step8(invoke(initial, step1, step2, step3, step4, step5, step6, step7))
 
         inline operator fun <START, S1, S2, S3, S4, S5, S6, S7, S8, S9> invoke(
             initial: START,
@@ -87,7 +87,7 @@ class Pipe {
             step7: (S6) -> S7,
             step8: (S7) -> S8,
             step9: (S8) -> S9,
-        ) = step9(step8(step7(step6(step5(step4(step3(step2(step1(initial)))))))))
+        ) = step9(invoke(initial, step1, step2, step3, step4, step5, step6, step7, step8))
 
         inline operator fun <START, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10> invoke(
             initial: START,
@@ -101,7 +101,7 @@ class Pipe {
             step8: (S7) -> S8,
             step9: (S8) -> S9,
             step10: (S9) -> S10,
-        ) = step10(step9(step8(step7(step6(step5(step4(step3(step2(step1(initial))))))))))
+        ) = step10(invoke(initial, step1, step2, step3, step4, step5, step6, step7, step8, step9))
 
         inline operator fun <START, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11> invoke(
             initial: START,
@@ -116,6 +116,6 @@ class Pipe {
             step9: (S8) -> S9,
             step10: (S9) -> S10,
             step11: (S10) -> S11,
-        ) = step11(step10(step9(step8(step7(step6(step5(step4(step3(step2(step1(initial)))))))))))
+        ) = step11(invoke(initial, step1, step2, step3, step4, step5, step6, step7, step8, step9, step10))
     }
 }
