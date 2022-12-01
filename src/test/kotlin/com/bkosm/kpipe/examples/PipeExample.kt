@@ -2,6 +2,7 @@
 
 package com.bkosm.kpipe.examples
 
+import com.bkosm.kpipe.kpipe
 import com.bkosm.kpipe.pipe
 import org.junit.jupiter.api.Test
 import kotlin.test.assertIs
@@ -73,11 +74,11 @@ class PipeExample {
             ::assertNull,
         )
 
-        pipe(
+        kpipe(
             event,
-            uut::store,
-            { it.isSuccess },
-            ::assertTrue,
+            { uut.store(this) },
+            { isSuccess },
+            { assertTrue("Failed for event $it") { this } },
         )
 
         pipe(
