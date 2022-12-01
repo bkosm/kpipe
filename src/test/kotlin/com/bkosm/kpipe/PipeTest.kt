@@ -169,4 +169,23 @@ internal class PipeTest {
 
         expect(1683.0) { res }
     }
+
+    @Test
+    fun `full formal test`() {
+        val full = p(
+            1,
+            { expect(1) { it }; 2 },
+            { expect(2) { it }; 3 },
+            { expect(3) { it }; 4 },
+            { expect(4) { it }; 5 },
+            { expect(5) { it }; 6 },
+            { expect(6) { it }; 7 },
+            { expect(7) { it }; 8 },
+            { expect(8) { it }; 9 },
+            { expect(9) { it }; 10 },
+            { expect(10) { it }; 11 },
+            { expect(11) { it }; 12 },
+        )
+        expect(12) { full }
+    }
 }

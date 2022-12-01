@@ -129,7 +129,7 @@ class KPipeTest {
             { it to this }
         )
 
-        expect( 2 to 24) { res }
+        expect(2 to 24) { res }
     }
 
     @Test
@@ -148,7 +148,7 @@ class KPipeTest {
             { (first + it) to (second - it) }
         )
 
-        expect( 4 to 22) { res }
+        expect(4 to 22) { res }
     }
 
     @Test
@@ -168,6 +168,25 @@ class KPipeTest {
             { toList().joinToString(it.toString()) }
         )
 
-        expect( "4222") { res }
+        expect("4222") { res }
+    }
+
+    @Test
+    fun `full formal test`() {
+        val full = kp(
+            1,
+            { expect(1) { this }; expect(1) { it }; 2 },
+            { expect(2) { this }; expect(1) { it }; 3 },
+            { expect(3) { this }; expect(1) { it }; 4 },
+            { expect(4) { this }; expect(1) { it }; 5 },
+            { expect(5) { this }; expect(1) { it }; 6 },
+            { expect(6) { this }; expect(1) { it }; 7 },
+            { expect(7) { this }; expect(1) { it }; 8 },
+            { expect(8) { this }; expect(1) { it }; 9 },
+            { expect(9) { this }; expect(1) { it }; 10 },
+            { expect(10) { this }; expect(1) { it }; 11 },
+            { expect(11) { this }; expect(1) { it }; 12 },
+        )
+        expect(12) { full }
     }
 }
